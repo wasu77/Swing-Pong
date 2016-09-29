@@ -1,7 +1,7 @@
 import java.awt.*;
 
-
 public class Paddle{
+
     public int paddleNumber;
 
     public int x, y, width = 30, height = 175;
@@ -26,10 +26,13 @@ public class Paddle{
         if (score < Pong.pong.scoreLimit - 2) {
             g.setColor(Color.CYAN);
         } else {
-            c = Color.MAGENTA;
-            g.setColor(c);
-            g.fillRect(x, y, width, height);
+            if (Pong.pong.paintingCount % 30 == 0) {
+                c = Color.MAGENTA;
+            } else if (Pong.pong.paintingCount % 15 == 0){
+                c = Color.YELLOW;
+            }
         }
+        g.setColor(c);
         g.drawRect(x, y, width, height);
     }
 

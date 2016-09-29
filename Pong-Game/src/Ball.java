@@ -1,9 +1,10 @@
+
 import java.awt.*;
 import java.util.Random;
 
 public class Ball {
+
     private Pong pong;
-    //private Paddle paddle;
 
     public int x, y, radius = 25;
 
@@ -26,16 +27,16 @@ public class Ball {
         int ballSpeed = 5;
 
         this.x += motionX * ballSpeed;
-
         this.y += motionY * ballSpeed;
+
         //Checking collision with walls
-        if (this.y < 0 || this.y + radius > pong.getHeight()) {
+        if (this.y < 0 || this.y > pong.getHeight() - radius) {
             this.motionY = -motionY;
         }
         // Collision type - #1 - ball hit paddle
         if (checkCollision(paddle1) == 1) {
             this.motionX = 1 + (amountOfHits/5);
-            //Try to work something to get better results when ball hits the paddle (for paddle2 do exactly the same)
+            //Try to change something to get better results when ball hits the paddle (for paddle2 do exactly the same)
             int[] list = {-2, -1, 1, 2};
             this.motionY = list[random.nextInt(list.length)];
             //this.motionY = -2 + random.nextInt(4);
@@ -61,7 +62,7 @@ public class Ball {
     }
 
     public int checkCollision(Paddle paddle) {
-        //Checking collisions with paddles and walls behind them
+
         if (this.x < paddle.x + paddle.width && this.x + radius > paddle.x && this.y < paddle.y + paddle.height && this.y +radius > paddle.y) {
             return 1; // miss the paddle
 
