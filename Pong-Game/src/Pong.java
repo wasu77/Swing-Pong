@@ -17,6 +17,8 @@ public class Pong implements ActionListener, KeyListener {
 
     public Ball ball;
 
+    public Music music;
+
     public int paintingCount = 0;
 
     public int botDifficulty, botMoves, botDelay = 0;
@@ -41,7 +43,8 @@ public class Pong implements ActionListener, KeyListener {
 
     public Pong() {
         Timer timer = new Timer(20, this);
-
+        music = new Music();
+        //music.startMusic();
         JFrame jFrame = new JFrame("Pong game");
         renderer = new Renderer();
         jFrame.setSize(width , height);
@@ -49,6 +52,7 @@ public class Pong implements ActionListener, KeyListener {
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.add(renderer);
         jFrame.addKeyListener(this);
+
 
         start();
 
@@ -76,25 +80,25 @@ public class Pong implements ActionListener, KeyListener {
                 //Block displayed when "I" is pressed - draw some instructions
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Verdana", 1, 30));
-                g.drawString("Instructions", pong.getWidth()/2, 100);
+                g.drawString("Instructions", pong.getWidth()/2 - 115, 100);
             }
             else if (!selectDifficulty) {
                 /*In this view, player can choose points that are necessary to win the game*/
                 g.setFont(new Font("Arial", 1, 20));
-                g.drawString("Choose score limit" + scoreLimit, pong.getWidth()/2 - 150, pong.getHeight()/2 -150);
-                g.drawString("Press Space to play", pong.getWidth() / 2 - 85, pong.getHeight() / 2 - 50);
-                g.drawString("Press Shift to play with BOT", pong.getWidth() / 2 - 85, pong.getHeight() / 2 - 100);
+                g.drawString("Choose score limit - LEFT / RIGHT : " + scoreLimit, pong.getWidth()/2 - 185, pong.getHeight()/2 -150);
+                g.drawString("2 Players game - press SHIFTm", pong.getWidth() / 2 - 150, pong.getHeight() / 2 - 50);
+                g.drawString("Single player game - press SPACE", pong.getWidth() / 2 - 165, pong.getHeight() / 2 - 100);
             }
         }
         if (selectDifficulty) {
             g.setFont(new Font("Arial", 1, 30));
-            g.drawString("Bot difficulty: " + getStringDifficulty(botDifficulty), pong.getWidth()/2 - 20, pong.getHeight() - 50);
+            g.drawString("Choose bot difficulty: " + getStringDifficulty(botDifficulty), pong.getWidth()/2 - 150, pong.getHeight()/2 - 50);
             g.drawString("Press Space to play", pong.getWidth()/2 - 150, pong.getHeight()/2 + 25);
         }
         if (gameStatus == 1) {
-            g.setColor(Color.WHITE);
+            g.setColor(Color.CYAN);
             g.setFont(new Font("Arial", 1, 50));
-            g.drawString("PAUSED", pong.getWidth()/2 - 20, pong.getHeight() - 50);
+            g.drawString("PAUSED", pong.getWidth()/2 - 102, pong.getHeight()/2);
         }
         if (gameStatus == 1 || gameStatus == 2) {
             g.setColor(Color.CYAN);
@@ -131,13 +135,13 @@ public class Pong implements ActionListener, KeyListener {
         String stringDifficulty = "Default";
         switch (botDifficulty) {
             case 0:
-                stringDifficulty = "Easy";
+                stringDifficulty = "easy";
                 break;
             case 1:
-                stringDifficulty = "Medium";
+                stringDifficulty = "medium";
                 break;
             case 2:
-                stringDifficulty = "Hard";
+                stringDifficulty = "hard";
                 break;
         }
         return stringDifficulty;
@@ -220,7 +224,9 @@ public class Pong implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         int id = keyEvent.getKeyCode();
-
+        if (id == KeyEvent.VK_M) {
+            music.startMusic();
+        }
         if (id == KeyEvent.VK_W) {
             w = true;
         }
@@ -240,7 +246,7 @@ public class Pong implements ActionListener, KeyListener {
                     botDifficulty++;
                 }
             }
-            else if (gameStatus == 0) {
+            else if (gameStatus == 0 && scoreLimit < 15) {
                     scoreLimit++;
             }
         }
@@ -250,7 +256,7 @@ public class Pong implements ActionListener, KeyListener {
                     botDifficulty--;
                 }
             }
-            else if (gameStatus == 0) {
+            else if (gameStatus == 0 && scoreLimit > 2) {
                     scoreLimit--;
                 }
 
