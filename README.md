@@ -1,2 +1,3 @@
 # Swing-Pong
-I am trying to create my first simple game in JAVa.
+My first simple game in Java.
+1 player (bot - three difficulties) & 2 player mode
