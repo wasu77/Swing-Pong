@@ -81,18 +81,20 @@ public class Pong implements ActionListener, KeyListener {
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Verdana", 1, 30));
                 g.drawString("Instructions", pong.getWidth()/2 - 115, 100);
+                g.setFont(new Font("Verdana", 1, 15));
+                g.drawString("Press M to turn ON / OFF music", pong.getWidth()/2 - 145, 130);
             }
             else if (!selectDifficulty) {
                 /*In this view, player can choose points that are necessary to win the game*/
                 g.setFont(new Font("Arial", 1, 20));
                 g.drawString("Choose score limit - LEFT / RIGHT : " + scoreLimit, pong.getWidth()/2 - 185, pong.getHeight()/2 -150);
-                g.drawString("2 Players game - press SHIFTm", pong.getWidth() / 2 - 150, pong.getHeight() / 2 - 50);
+                g.drawString("2 Players game - press SHIFT", pong.getWidth() / 2 - 150, pong.getHeight() / 2 - 50);
                 g.drawString("Single player game - press SPACE", pong.getWidth() / 2 - 165, pong.getHeight() / 2 - 100);
             }
         }
         if (selectDifficulty) {
             g.setFont(new Font("Arial", 1, 30));
-            g.drawString("Choose bot difficulty: " + getStringDifficulty(botDifficulty), pong.getWidth()/2 - 150, pong.getHeight()/2 - 50);
+            g.drawString("Choose bot difficulty: " + getStringDifficulty(botDifficulty), pong.getWidth()/2 - 175, pong.getHeight()/2 - 10);
             g.drawString("Press Space to play", pong.getWidth()/2 - 150, pong.getHeight()/2 + 25);
         }
         if (gameStatus == 1) {

@@ -3,9 +3,7 @@ import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 import java.net.URL;
 
-/**
- * Created by maciek on 29.09.16.
- */
+
 public class Music {
 
     public Music() {
@@ -28,6 +26,7 @@ public class Music {
             } else {
                 sequencer = MidiSystem.getSequencer();
                 sequencer.setSequence(sequence);
+                sequencer.setLoopCount(5);
                 sequencer.open();
                 sequencer.start();
 

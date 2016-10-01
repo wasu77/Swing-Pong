@@ -23,14 +23,15 @@ public class Paddle{
     }
 
     public void render(Graphics2D g) {
-        if (score < Pong.pong.scoreLimit - 2) {
-            g.setColor(Color.CYAN);
-        } else {
+
+        if (score > Pong.pong.scoreLimit - 2) {
             if (Pong.pong.paintingCount % 30 == 0) {
                 c = Color.MAGENTA;
-            } else if (Pong.pong.paintingCount % 15 == 0){
+            } else if (Pong.pong.paintingCount % 15 == 0) {
                 c = Color.YELLOW;
             }
+        } else {
+            c = Color.CYAN;
         }
         g.setColor(c);
         g.drawRect(x, y, width, height);
