@@ -5,6 +5,7 @@ import pl.wasu.enums.CollisionResult;
 import java.util.Random;
 
 public class Ball {
+
     private int x;
     private int y;
     private int motionX;
@@ -28,15 +29,15 @@ public class Ball {
 
     public int getAmountOfHits() { return amountOfHits;}
 
-    public Ball(Pong pong) {
+    public Ball(BoardSize boardSize) {
         this.random = new Random();
-        start(pong);
+        start(boardSize);
     }
-    public void start(Pong pong) {
+    public void start(BoardSize boardSize) {
         this.amountOfHits = 0;
 
-        this.y = pong.getBoardHeight()/2 - radius/2;
-        this.x = pong.getBoardWidth()/2 - radius/2;
+        this.y = boardSize.getBoardHeight()/2 - radius/2;
+        this.x = boardSize.getBoardWidth()/2 - radius/2;
 
         this.motionY = -2 + random.nextInt(4);
         this.motionX = -1 + random.nextInt(1);
@@ -46,7 +47,7 @@ public class Ball {
         }
     }
 
-    public void update(Paddle paddle1, Paddle paddle2, Pong pong) {
+    public void update(Paddle paddle1, Paddle paddle2, BoardSize boardSize) {
         int ballSpeed = 5;
 
         this.x += motionX * ballSpeed;
@@ -55,7 +56,7 @@ public class Ball {
         int score2 = paddle2.getScore();
 
         //Collision with walls
-        if (this.y < 0 || this.y > pong.getBoardHeight() - radius) {
+        if (this.y < 0 || this.y > boardSize.getBoardHeight() - radius) {
             this.motionY = -motionY;
         }
         /*Collision with paddle on the left side (Paddle 1)*/
@@ -67,7 +68,7 @@ public class Ball {
         } else if (checkCollision(paddle1) == CollisionResult.MISS) {
             score2++;
             paddle2.setScore(score2);
-            start(pong);
+            start(boardSize);
         }
         /*Collision with paddle on the right side (Paddle 2)*/
         if (checkCollision(paddle2) == CollisionResult.HIT) {
@@ -78,17 +79,17 @@ public class Ball {
         } else if (checkCollision(paddle2) == CollisionResult.MISS) {
             score1++;
             paddle1.setScore(score1);
-            start(pong);
+            start(boardSize);
         }
     }
 
-    public CollisionResult checkCollision(Paddle paddle) {
+    private CollisionResult checkCollision(Paddle paddle) {
 
         if (this.x < paddle.getX() + paddle.getPaddleWidth() && this.x + radius > paddle.getX() && this.y < paddle.getY() + paddle.getPaddleHeight() && this.y +radius > paddle.getY()) {
-            return CollisionResult.HIT; // miss the paddle
+            return CollisionResult.HIT;
         } else if ((paddle.getX() > x + radius && paddle.getPaddleNumber() == 1) || (paddle.getX() < x && paddle.getPaddleNumber() == 2)) {
-            return CollisionResult.MISS; //hit the paddle
+            return CollisionResult.MISS;
         }
-        return CollisionResult.NONE; //nothing - ball is flying
+        return CollisionResult.NONE;
     }
 }

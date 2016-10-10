@@ -43,22 +43,22 @@ public class Paddle {
         this.y = y;
     }
 
-    public Paddle(Pong pong, int paddleNumber) {
+    public Paddle(BoardSize boardSize, int paddleNumber) {
         this.paddleNumber = paddleNumber;
         if (paddleNumber == 1) {
             this.x = 0;
         }
         if (paddleNumber == 2) {
-            this.x = pong.getBoardWidth() - paddleWidth - 1;
+            this.x = boardSize.getBoardWidth() - paddleWidth - 1;
         }
-        this.y = pong.getBoardHeight()/2 - this.paddleHeight/2;
+        this.y = boardSize.getBoardHeight()/2 - this.paddleHeight/2;
     }
 
-    public void move(boolean up) {
+    public void move(BoardSize boardSize, boolean up) {
         if(up) {
             moveUp();
         } else {
-            moveDown();
+            moveDown(boardSize);
         }
     }
 
@@ -69,11 +69,11 @@ public class Paddle {
             y = 0;
         }
     }
-    public void moveDown() {
-        if (y + paddleHeight + speed < 700) {
+    public void moveDown(BoardSize boardSize) {
+        if (y + paddleHeight + speed < boardSize.getBoardHeight()) {
             y+= speed;
         } else {
-            y = 700 - paddleHeight;
+            y = boardSize.getBoardHeight() - paddleHeight;
         }
     }
 
